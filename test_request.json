@@ -2,6 +2,67 @@
   "requestId": "asdasdasd",
   "data": {
     "modelName": "AdvPruning",
+    "previousSolution": {
+      "actions": [
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 3,
+          "step": 1,
+          "targetId": 2
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 2,
+          "step": 2,
+          "targetId": 1
+        },
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 1,
+          "step": 3,
+          "targetId": 0
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 0,
+          "step": 4,
+          "targetId": 4
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 4,
+          "step": 5,
+          "targetId": 5
+        },
+        {
+          "reward": -100,
+          "rewardName": "large-negative",
+          "sourceId": 5,
+          "step": 6,
+          "targetId": 0
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 0,
+          "step": 7,
+          "targetId": 4
+        },
+        {
+          "reward": -20,
+          "rewardName": "negative",
+          "sourceId": 4,
+          "step": 8,
+          "targetId": 0
+        }
+      ],
+      "totalReward": 480
+    },
     "environment": {
       "type": "network",
       "version": "four-rewards-v2",

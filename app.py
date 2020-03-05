@@ -94,15 +94,26 @@ def _machine_solution(request):
     model_name = request_snake['data']['model_name']
     model = model_dict[model_name]
 
+    prev_total_reward = request_snake['data']['previous_solution']['total_reward']
     actions, total_reward = create_action_trace(
         environment=environment, model_type=model['type'], model_parameter=model['parameter'])
 
+    if prev_total_reward > total_reward:
+        new_actions = request['data']['previousSolution']['actions']
+        new_total_reward = prev_total_reward
+        solution_type = 'COPY'
+    else:
+        new_actions = actions
+        new_total_reward = total_reward
+        solution_type = 'NEW'
+
     data = {
-        'actions': actions,
+        'actions': new_actions,
         "environmentId": environment['environment_id'],
         "networkId": environment['network_id'],
         "modelName": model_name,
-        "totalReward": total_reward
+        "totalReward": new_total_reward,
+        "solutionType": solution_type
     }
 
     response = {'requestId': request_snake['request_id'], 'data': data}
