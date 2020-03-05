@@ -84,7 +84,7 @@ def create_action_trace(environment, model_type, model_parameter):
 
     action_trace = parse_actions(NT, RT)
 
-    return action_trace
+    return action_trace, RT_tot
 
 
 def _machine_solution(request):
@@ -94,10 +94,18 @@ def _machine_solution(request):
     model_name = request_snake['data']['model_name']
     model = model_dict[model_name]
 
-    actions = create_action_trace(environment=environment,
-                                  model_type=model['type'], model_parameter=model['parameter'])
+    actions, total_reward = create_action_trace(
+        environment=environment, model_type=model['type'], model_parameter=model['parameter'])
 
-    response = {'requestId': request_snake['request_id'], 'data': {'actions': actions}}
+    data = {
+        'actions': actions,
+        "environmentId": environment['environment_id'],
+        "networkId": environment['network_id'],
+        "modelName": model_name,
+        "totalReward": total_reward
+    }
+
+    response = {'requestId': request_snake['request_id'], 'data': data}
     return response
 
 
