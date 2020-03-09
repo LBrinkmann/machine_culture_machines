@@ -1,0 +1,166 @@
+POST http://3.122.195.208/ 
+content-type: application/json
+
+{
+  "requestId": "asdasdasd",
+  "data": {
+    "previousSolution": {
+      "actions": [
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 3,
+          "step": 1,
+          "targetId": 2
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 2,
+          "step": 2,
+          "targetId": 1
+        },
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 1,
+          "step": 3,
+          "targetId": 0
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 0,
+          "step": 4,
+          "targetId": 4
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 4,
+          "step": 5,
+          "targetId": 5
+        },
+        {
+          "reward": -100,
+          "rewardName": "large-negative",
+          "sourceId": 5,
+          "step": 6,
+          "targetId": 0
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 0,
+          "step": 7,
+          "targetId": 4
+        },
+        {
+          "reward": -20,
+          "rewardName": "negative",
+          "sourceId": 4,
+          "step": 8,
+          "targetId": 0
+        }
+      ],
+      "totalReward": 480
+    },
+    "modelName": "AdvPruning",
+    "environment": {
+      "type": "network",
+      "version": "four-rewards-v2",
+      "_id": "b1c0f498741bbe75c70dbbcd0906ccda",
+      "experimentEnvironmentId": "b1c0f498741bbe75c70dbbcd0906ccda",
+      "environmentId": "4f33450798ebcbdbf993c990049dfe19",
+      "startingNodeId": 3,
+      "networkId": "c597a1db-3134-46be-954f-4575242f9e8a",
+      "requiredSolutionLength": 8,
+      "missingSolutionPenalty": -200,
+      "baselineReward": 520,
+      "class": "avpruning_sensitive",
+      "experimentName": "practice",
+      "actions": [
+        {
+          "reward": -100,
+          "rewardName": "large-negative",
+          "sourceId": 0,
+          "targetId": 5
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 0,
+          "targetId": 4
+        },
+        {
+          "reward": -100,
+          "rewardName": "large-negative",
+          "sourceId": 5,
+          "targetId": 0
+        },
+        {
+          "reward": -20,
+          "rewardName": "negative",
+          "sourceId": 5,
+          "targetId": 3
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 4,
+          "targetId": 5
+        },
+        {
+          "reward": -20,
+          "rewardName": "negative",
+          "sourceId": 4,
+          "targetId": 0
+        },
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 1,
+          "targetId": 3
+        },
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 1,
+          "targetId": 0
+        },
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 3,
+          "targetId": 4
+        },
+        {
+          "reward": 20,
+          "rewardName": "positive",
+          "sourceId": 3,
+          "targetId": 2
+        },
+        {
+          "reward": 140,
+          "rewardName": "large-positive",
+          "sourceId": 2,
+          "targetId": 1
+        },
+        {
+          "reward": -20,
+          "rewardName": "negative",
+          "sourceId": 2,
+          "targetId": 0
+        }
+      ],
+      "nodes": [
+        { "id": 0, "displayName": "A", "x": 0.7, "y": 0.2 },
+        { "id": 5, "displayName": "F", "x": 0.9, "y": 0.5 },
+        { "id": 4, "displayName": "E", "x": 0.7, "y": 0.8 },
+        { "id": 1, "displayName": "B", "x": 0.3, "y": 0.2 },
+        { "id": 3, "displayName": "D", "x": 0.3, "y": 0.8 },
+        { "id": 2, "displayName": "C", "x": 0.1, "y": 0.5 }
+      ]
+    }
+  }
+}

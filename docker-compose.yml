@@ -1,0 +1,6 @@
+version: "3.1"
+services:
+  machine_backend:
+    image: levinb/machine-culture:12edef06149a0c9407d15bba33cad19f628a3efb
+    ports:
+      - "8085:8085"
