@@ -37,6 +37,14 @@ models = [
             'gamma_g': 0.2,
             'beta': 0.01},
         'type': 'pruning'
+    },
+    {
+        'name': 'TakeWorst',  # wrong name, for debug only
+        'parameter': {
+            'gamma_s': 0.4,
+            'gamma_g': 0.2,
+            'beta': 0.01},
+        'type': 'pruning'
     }
 ]
 
@@ -94,9 +102,13 @@ def _machine_solution(request):
     model_name = request_snake['data']['model_name']
     model = model_dict[model_name]
 
-    prev_total_reward = request_snake['data']['previous_solution']['total_reward']
     actions, total_reward = create_action_trace(
         environment=environment, model_type=model['type'], model_parameter=model['parameter'])
+
+    if request_snake['data']['previous_solution'] is None:
+        prev_total_reward = None
+    else:
+        prev_total_reward = request_snake['data']['previous_solution']['total_reward']
 
     if prev_total_reward > total_reward:
         new_actions = request['data']['previousSolution']['actions']
