@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
-
+import traceback
 from mc.reward_networks import optimisation2 as opt2
 from mc.reward_networks import optimisation3 as opt3
 from mc.reward_networks.parser import parse_actions
@@ -27,7 +27,6 @@ class BetterJsonWrapper(object):
 
 app = Flask(__name__)
 app.json_encoder = Better_JSON_ENCODER
-
 
 models = [
     {
@@ -105,14 +104,11 @@ def _machine_solution(request):
     actions, total_reward = create_action_trace(
         environment=environment, model_type=model['type'], model_parameter=model['parameter'])
 
-    if request_snake['data']['previous_solution'] is None:
-        prev_total_reward = None
-    else:
-        prev_total_reward = request_snake['data']['previous_solution']['total_reward']
+    prev_solution = request_snake['data']['previous_solution']
 
-    if prev_total_reward > total_reward:
-        new_actions = request['data']['previousSolution']['actions']
-        new_total_reward = prev_total_reward
+    if prev_solution is not None and prev_solution['total_reward'] > total_reward:
+        new_actions = prev_solution['actions']
+        new_total_reward = prev_solution['total_reward']
         solution_type = 'COPY'
     else:
         new_actions = actions
@@ -148,6 +144,24 @@ def test():
 @app.route('/', methods=['POST'])
 def machine_solution():
     return _machine_solution(request.get_json())
+
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    error = getattr(e, "original_exception", None)
+    message = [str(x) for x in error.args]
+    status_code = 500
+    success = False
+    response = {
+        'success': success,
+        'error': {
+            'type': error.__class__.__name__,
+            'message': message,
+            'stacktrace': traceback.format_exc()
+        }
+    }
+
+    return jsonify(response), status_code
 
 
 if __name__ == '__main__':
