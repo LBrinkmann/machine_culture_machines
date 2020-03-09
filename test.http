@@ -1,4 +1,4 @@
-POST http://0.0.0.0:8085/ 
+POST http://3.122.195.208/
 content-type: application/json
 
 {
@@ -65,7 +65,7 @@ content-type: application/json
       ],
       "totalReward": 480
     },
-    "modelName": "AdvPruning",
+    "modelName": "Lookahead",
     "environment": {
       "type": "network",
       "version": "four-rewards-v2",
