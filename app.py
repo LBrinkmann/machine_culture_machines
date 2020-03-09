@@ -38,6 +38,14 @@ models = [
         'type': 'pruning'
     },
     {
+        'name': 'Lookahead',
+        'parameter': {
+            'gamma_s': 0.0,
+            'gamma_g': 0.0,
+            'beta': 1},
+        'type': 'pruning'
+    },
+    {
         'name': 'TakeWorst',  # wrong name, for debug only
         'parameter': {
             'gamma_s': 0.4,
