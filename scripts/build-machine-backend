@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# sudo docker login --username= --password=
+
+DOCKER_ACC=levinb
+DOCKER_REPO=machine-culture
+IMG_TAG=$(git rev-parse HEAD)
+
+sudo docker build -f docker/Dockerfile.mb -t $DOCKER_ACC/$DOCKER_REPO:$IMG_TAG .
+
+sudo docker push $DOCKER_ACC/$DOCKER_REPO:$IMG_TAG
+
+echo $DOCKER_ACC/$DOCKER_REPO:$IMG_TAG

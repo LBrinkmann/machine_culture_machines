@@ -1,0 +1,16 @@
+*/node_modules
+.*
+.gitignore
+data/**/*
+*/dist
+__pycache__
+*/.ipynb_checkpoints
+research-frontend/**/*
+empirica/**/*
+notebooks/**/*
+nodes/**/*
+docs/**/*
+*.egg-info/
+*.csv
+*.pkl
+*.json

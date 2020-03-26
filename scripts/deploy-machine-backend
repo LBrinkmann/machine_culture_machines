@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+kubectl -n mcu apply -f deployment/machine_backend.yml
