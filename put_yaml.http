@@ -1,4 +1,4 @@
-PUT http://3.122.195.208/config
+PUT http://0.0.0.0:8085/config
 content-type: application/yaml
 
 - name: Human
@@ -19,3 +19,5 @@ content-type: application/yaml
     gamma_g: 0.0
     beta: null
   type: pruning
+- name: Random
+  type: random

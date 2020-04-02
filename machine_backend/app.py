@@ -31,7 +31,7 @@ app.json_encoder = Better_JSON_ENCODER
 
 def load_yaml(file):
     with open(file) as f:
-        return yaml.load(f)
+        return yaml.safe_load(f)
 
 
 def store_yaml(obj, file):
@@ -75,13 +75,20 @@ def calculate_q_matrix(R, T, n_steps, beta, gamma_s, gamma_g):
 
 
 def create_action_trace(environment, model_type, model_parameter):
+    n_nodes = len(environment['nodes'])
     T, R = calculate_reward_transition_matrices(
-        environment['actions'], n_nodes=len(environment['nodes']))
+        environment['actions'], n_nodes=n_nodes)
     n_steps = environment["required_solution_length"]
     starting_node = environment["starting_node_id"]
     if model_type == 'pruning':
         Q_temp = calculate_q_matrix(R, T, n_steps, **model_parameter)
         RT_tot, AT, NT, RT = tm.calculate_traces_stochastic(Q_temp, T, R, starting_node)
+    elif model_type == 'random':
+        Q_random = np.zeros((n_nodes*n_steps, 2))
+        Q_random_idx = np.random.choice(2, n_nodes*n_steps)
+        Q_random[np.arange(n_nodes*n_steps), Q_random_idx] = 1
+        Q_random = Q_random.reshape(n_steps, n_nodes, 2)
+        RT_tot, AT, NT, RT = tm.calculate_traces_stochastic(Q_random, T, R, starting_node)
     else:
         raise NotImplementedError('Model type is not implemented.')
 
@@ -98,7 +105,8 @@ def _machine_solution(request):
     model = model_dict[model_name]
 
     actions, total_reward = create_action_trace(
-        environment=environment, model_type=model['type'], model_parameter=model['parameter'])
+        environment=environment, model_type=model['type'], 
+        model_parameter=model.get('parameter', {}))
     previous_solution = request_snake['data']['previous_solution']
     if (previous_solution is not None) and (previous_solution['total_reward'] > total_reward):
         new_actions = previous_solution['actions']
@@ -146,7 +154,7 @@ def machine_solution():
 def put_config():
     data = request.get_data()
     print(data)
-    models = yaml.load(data)
+    models = yaml.safe_load(data)
     store_yaml(models, './models.yaml')
     global model_dict
     model_dict = {m['name']: m for m in models}
