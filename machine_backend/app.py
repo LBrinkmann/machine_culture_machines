@@ -1,9 +1,9 @@
 from flask import Flask, request
 import json
+import yaml
 
-from mc.reward_networks import optimisation2 as opt2
-from mc.reward_networks import optimisation3 as opt3
-from mc.reward_networks.parser import parse_actions
+from mc.reward_networks.models import torch_model as tm
+from mc.reward_networks.utils.parser import parse_actions
 
 from machine_backend.utils import Better_JSON_ENCODER, camelize_dict_keys, snakeize_dict_keys
 
@@ -29,16 +29,16 @@ app = Flask(__name__)
 app.json_encoder = Better_JSON_ENCODER
 
 
-models = [
-    {
-        'name': 'AdvPruning',
-        'parameter': {
-            'gamma_s': 0.4,
-            'gamma_g': 0.2,
-            'beta': 0.01},
-        'type': 'pruning'
-    }
-]
+def load_yaml(file):
+    with open(file) as f:
+        return yaml.load(f)
+
+
+def store_yaml(obj, file):
+    with open(file, 'w') as f:
+        return yaml.dump(obj, f)
+
+models = load_yaml('./models.yaml')
 
 
 model_dict = {m['name']: m for m in models}
@@ -66,9 +66,12 @@ def calculate_reward_transition_matrices(actions, n_nodes):
 
 def calculate_q_matrix(R, T, n_steps, beta, gamma_s, gamma_g):
     G = np.array([[gamma_s, gamma_g]])
-    Q = opt2.calculate_q_matrix_avpruning(R[np.newaxis], T[np.newaxis], n_steps, G)[0, 0]
-    print(Q.shape)
-    return beta * Q
+    Q = tm.calc_all_Q(T[np.newaxis], R[np.newaxis], G, n_steps)[0, 0]
+    if beta is not None:
+        Q_temp = beta * Q
+    else:
+        Q_temp = Q
+    return Q_temp
 
 
 def create_action_trace(environment, model_type, model_parameter):
@@ -78,7 +81,7 @@ def create_action_trace(environment, model_type, model_parameter):
     starting_node = environment["starting_node_id"]
     if model_type == 'pruning':
         Q_temp = calculate_q_matrix(R, T, n_steps, **model_parameter)
-        RT_tot, AT, NT, RT = opt3.calculate_traces_stochastic(Q_temp, T, R, starting_node)
+        RT_tot, AT, NT, RT = tm.calculate_traces_stochastic(Q_temp, T, R, starting_node)
     else:
         raise NotImplementedError('Model type is not implemented.')
 
@@ -94,13 +97,12 @@ def _machine_solution(request):
     model_name = request_snake['data']['model_name']
     model = model_dict[model_name]
 
-    prev_total_reward = request_snake['data']['previous_solution']['total_reward']
     actions, total_reward = create_action_trace(
         environment=environment, model_type=model['type'], model_parameter=model['parameter'])
-
-    if prev_total_reward > total_reward:
-        new_actions = request['data']['previousSolution']['actions']
-        new_total_reward = prev_total_reward
+    previous_solution = request_snake['data']['previous_solution']
+    if (previous_solution is not None) and (previous_solution['total_reward'] > total_reward):
+        new_actions = previous_solution['actions']
+        new_total_reward = previous_solution['total_reward']
         solution_type = 'COPY'
     else:
         new_actions = actions
@@ -135,8 +137,27 @@ def test():
 
 @app.route('/', methods=['POST'])
 def machine_solution():
+
+    print('request.get_json', request.get_json())
     return _machine_solution(request.get_json())
 
 
+@app.route('/config', methods=['PUT'])
+def put_config():
+    data = request.get_data()
+    print(data)
+    models = yaml.load(data)
+    store_yaml(models, './models.yaml')
+    global model_dict
+    model_dict = {m['name']: m for m in models}
+    return (yaml.dump(models), 200)
+
+
+@app.route('/config', methods=['GET'])
+def get_config():
+    models = load_yaml('./models.yaml')
+    return (yaml.dump(models), 200)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=8085)

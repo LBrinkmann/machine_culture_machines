@@ -1,0 +1,18 @@
+- name: Human
+  parameter:
+    gamma_s: 0.4
+    gamma_g: 0.2
+    beta: 0.01
+  type: pruning
+- name: Risky
+  parameter:
+    gamma_s: 0.4
+    gamma_g: 0.2
+    beta: 0.01
+  type: pruning
+- name: Lookahead
+  parameter:
+    gamma_s: 0.0
+    gamma_g: 0.0
+    beta: null
+  type: pruning
