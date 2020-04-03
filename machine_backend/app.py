@@ -64,8 +64,8 @@ def calculate_reward_transition_matrices(actions, n_nodes):
     return T, R
 
 
-def calculate_q_matrix(R, T, n_steps, beta, gamma_s, gamma_g):
-    G = np.array([[gamma_s, gamma_g]])
+def calculate_q_matrix(R, T, n_steps, beta, gamma_g, gamma_s):
+    G = np.array([[gamma_g, gamma_s]])
     Q = tm.calc_all_Q(T[np.newaxis], R[np.newaxis], G, n_steps)[0, 0]
     if beta is not None:
         Q_temp = beta * Q

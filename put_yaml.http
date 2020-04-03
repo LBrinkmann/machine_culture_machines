@@ -3,20 +3,32 @@ content-type: application/yaml
 
 - name: Human
   parameter:
-    gamma_s: 0.4
-    gamma_g: 0.2
-    beta: 0.01
+    gamma_s: 0.564808
+    gamma_g: 0.355807
+    beta: 0.014259
   type: pruning
 - name: Risky
   parameter:
-    gamma_s: 0.4
-    gamma_g: 0.2
-    beta: 0.01
+    gamma_s: 0.201596
+    gamma_g: 0.335148
+    beta: 0.014259
+  type: pruning
+- name: Neutral
+  parameter:
+    gamma_s: 0.350567
+    gamma_g: 0.350567
+    beta: 0.014259
   type: pruning
 - name: Lookahead
   parameter:
     gamma_s: 0.0
     gamma_g: 0.0
+    beta: null
+  type: pruning
+- name: NoPlan
+  parameter:
+    gamma_s: 1.
+    gamma_g: 1.
     beta: null
   type: pruning
 - name: Random
