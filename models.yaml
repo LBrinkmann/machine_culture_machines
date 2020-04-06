@@ -1,20 +1,20 @@
 - name: Human
   parameter:
-    beta: 0.014259
-    gamma_g: 0.355807
-    gamma_s: 0.564808
+    beta: 0.0142
+    gamma_g: 0.355
+    gamma_s: 0.564
   type: pruning
 - name: Risky
   parameter:
-    beta: 0.014259
-    gamma_g: 0.335148
-    gamma_s: 0.201596
+    beta: 0.0142
+    gamma_g: 0.336
+    gamma_s: 0.225
   type: pruning
 - name: Neutral
   parameter:
-    beta: 0.014259
-    gamma_g: 0.350567
-    gamma_s: 0.350567
+    beta: 0.0142
+    gamma_g: 0.351
+    gamma_s: 0.351
   type: pruning
 - name: Lookahead
   parameter:
