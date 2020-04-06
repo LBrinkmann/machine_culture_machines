@@ -145,8 +145,6 @@ def test():
 
 @app.route('/', methods=['POST'])
 def machine_solution():
-
-    print('request.get_json', request.get_json())
     return _machine_solution(request.get_json())
 
 
