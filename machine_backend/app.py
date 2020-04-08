@@ -1,7 +1,7 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
 import yaml
-
+import traceback
 from . import torch_model as tm
 from .parser import parse_actions
 
@@ -171,6 +171,23 @@ def put_config():
 def get_config():
     models = load_yaml('./models.yaml')
     return (yaml.dump(models), 200)
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    error = getattr(e, "original_exception", None)
+    message = [str(x) for x in error.args]
+    status_code = 500
+    success = False
+    response = {
+        'success': success,
+        'error': {
+            'type': error.__class__.__name__,
+            'message': message,
+            'stacktrace': traceback.format_exc()
+        }
+    }
+
+    return jsonify(response), status_code
 
 
 if __name__ == '__main__':
