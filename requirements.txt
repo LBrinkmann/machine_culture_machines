@@ -3,3 +3,8 @@ flask_socketio
 imageio
 gunicorn
 pyyaml
+numpy
+torch
+scipy
+pandas
+uuid

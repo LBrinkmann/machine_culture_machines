@@ -5,7 +5,7 @@ content-type: application/json
   "requestId": "asdasdasd",
   "data": {
     "previousSolution": null,
-    "modelName": "AdvPruning",
+    "modelName": "Risky",
     "environment": {
       "type": "network",
       "version": "four-rewards-v2",

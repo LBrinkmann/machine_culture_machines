@@ -18,7 +18,7 @@ RUN . /appenv/bin/activate; pip --no-cache-dir install -U setuptools
 COPY . /app
 RUN . /appenv/bin/activate; pip --no-cache-dir install --no-dependencies .
 
-COPY docker/entry.sh /start.sh
+COPY deployment/entry.sh /start.sh
 
 ENTRYPOINT ["/start.sh"]
 CMD ["start-machine-backend"]

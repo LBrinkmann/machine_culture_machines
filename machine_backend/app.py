@@ -2,8 +2,8 @@ from flask import Flask, request
 import json
 import yaml
 
-from mc.reward_networks.models import torch_model as tm
-from mc.reward_networks.utils.parser import parse_actions
+from . import torch_model as tm
+from .parser import parse_actions
 
 from machine_backend.utils import Better_JSON_ENCODER, camelize_dict_keys, snakeize_dict_keys
 
@@ -11,6 +11,14 @@ import numpy as np
 
 
 # credit: https://github.com/miguelgrinberg/Flask-SocketIO/issues/274
+
+reward_map = {
+   -100: 'large-negative',
+   -20: 'negative',
+   20: 'positive',
+   140: 'large-positive',
+}
+
 
 
 class BetterJsonWrapper(object):
@@ -92,7 +100,7 @@ def create_action_trace(environment, model_type, model_parameter):
     else:
         raise NotImplementedError('Model type is not implemented.')
 
-    action_trace = parse_actions(NT, RT)
+    action_trace = parse_actions(NT, RT, reward_map)
 
     return action_trace, RT_tot
 

@@ -14,3 +14,5 @@ docs/**/*
 *.csv
 *.pkl
 *.json
+
+mc/data
