@@ -1,0 +1,15 @@
+{
+  "requestId": "asdasdasd",
+  "data": {
+    "action": {
+      "x": 0.2,
+      "y": 0.2
+    },
+    "environment": {
+      "type": "catwell",
+      "version": "four-rewards-v2",
+      "experimentName": "test1",
+      "seed": 1
+    }
+  }
+}

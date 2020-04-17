@@ -10,15 +10,12 @@ from machine_backend.utils import Better_JSON_ENCODER, camelize_dict_keys, snake
 import numpy as np
 
 
-# credit: https://github.com/miguelgrinberg/Flask-SocketIO/issues/274
-
 reward_map = {
    -100: 'large-negative',
    -20: 'negative',
    20: 'positive',
-   140: 'large-positive',
+   140: 'large-positive
 }
-
 
 
 class BetterJsonWrapper(object):
@@ -172,7 +169,7 @@ def get_config():
     models = load_yaml('./models.yaml')
     return (yaml.dump(models), 200)
 
-@app.errorhandler(Exception)
+@app.errorhandler(InternalServerError)
 def handle_error(e):
     error = getattr(e, "original_exception", None)
     message = [str(x) for x in error.args]

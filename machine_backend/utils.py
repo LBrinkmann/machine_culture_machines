@@ -59,3 +59,15 @@ class Better_JSON_ENCODER(json.JSONEncoder):
             return obj.isoformat()
         else:
             return super(Better_JSON_ENCODER, self).default(obj)
+
+
+# class BetterJsonWrapper(object):
+#     @staticmethod
+#     def dumps(*args, **kwargs):
+#         if 'cls' not in kwargs:
+#             kwargs['cls'] = Better_JSON_ENCODER
+#         return json.dumps(*args, **kwargs)
+
+#     @staticmethod
+#     def loads(*args, **kwargs):
+#         return json.loads(*args, **kwargs)
