@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 import json
 import yaml
 import traceback
-from . import torch_model as tm
-from .parser import parse_actions
+from machine_backend.reward_network import torch_model as tm
+from machine_backend.reward_network.parser import parse_actions
 
 from machine_backend.utils import Better_JSON_ENCODER, camelize_dict_keys, snakeize_dict_keys
 
@@ -14,7 +14,7 @@ reward_map = {
    -100: 'large-negative',
    -20: 'negative',
    20: 'positive',
-   140: 'large-positive
+   140: 'large-positive'
 }
 
 
@@ -169,9 +169,11 @@ def get_config():
     models = load_yaml('./models.yaml')
     return (yaml.dump(models), 200)
 
-@app.errorhandler(InternalServerError)
-def handle_error(e):
-    error = getattr(e, "original_exception", None)
+
+@app.errorhandler(Exception)
+def handle_error(error):
+    # import ipdb; ipdb.set_trace()
+    # error = getattr(e, "original_exception", None)
     message = [str(x) for x in error.args]
     status_code = 500
     success = False
@@ -183,7 +185,8 @@ def handle_error(e):
             'stacktrace': traceback.format_exc()
         }
     }
-
+    print(message)
+    print(traceback.format_exc())
     return jsonify(response), status_code
 
 
