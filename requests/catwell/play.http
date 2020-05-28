@@ -1,0 +1,35 @@
+POST http://0.0.0.0:8090/play
+content-type: application/json
+
+{
+  "requestId": "asdasdasd",
+  "data": {
+    "previousSolution": [{
+      "x": 0.2,
+      "y": 0.3,
+      "step": 1
+    },
+    {
+      "x": 0.2,
+      "y": 0.3,
+      "step": 2
+    },
+    {
+      "x": 0.2,
+      "y": 0.3,
+      "step": 3
+    },
+    {
+      "x": 0.2,
+      "y": 0.3,
+      "step": 4
+    },
+    ],
+    "environment": {
+      "type": "catwell",
+      "version": "foo",
+      "experimentName": "test",
+      "seed": 1
+    }
+  }
+}
