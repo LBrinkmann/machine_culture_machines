@@ -67,6 +67,14 @@ def get_image():
     seed = int(request.args.get('seed'))
     return _get_image(**experiments[exp_name], seed=seed, size=size)
 
+@app.route('/play', methods=['POST'])
+def action_play():
+    request_snake = snakeize_dict_keys(request.get_json(silent=True))
+    print(request_snake['data']['previous_solution'])
+    #data = _action_eval(request_snake['data']['previous_solution'][0])
+    resp={'annenisikim':5}
+    #resp = {'data': request_snake['data'], 'request_id': request_snake['request_id']}
+    return camelize_dict_keys(resp)
 
 # @app.route('/config', methods=['PUT'])
 # def put_config():
