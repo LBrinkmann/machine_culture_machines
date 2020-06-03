@@ -4,22 +4,26 @@
       "solution": [{
         "x": 0.2,
         "y": 0.3,
-        "step": 1
+        "step": 1,
+        "reward": 5
       },
       {
         "x": 0.2,
         "y": 0.3,
-        "step": 2
+        "step": 2,
+        "reward": 5
       },
       {
         "x": 0.2,
         "y": 0.3,
-        "step": 3
+        "step": 3,
+        "reward": 5
       },
       {
         "x": 0.2,
         "y": 0.3,
-        "step": 4
+        "step": 4,
+        "reward": 5
       }
       ]
     }
