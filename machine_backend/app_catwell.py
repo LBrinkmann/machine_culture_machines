@@ -51,6 +51,15 @@ def _get_image(size, **kwargs):
     img = Image.fromarray(landscape, 'L')
     return serve_pil_image(img)
 
+def random_actions(environment):
+    step_size=4
+    data=[]
+    x_array = np.random.random(step_size)
+    y_array = np.random.random(step_size)
+    for i in range(step_size):
+        action = {'x': x_array[i], 'y': y_array[i],'step':i+1}
+        data.append( _action_eval(environment,action))
+    return data
 
 @app.route('/eval', methods=['POST'])
 def action_eval():
@@ -69,11 +78,9 @@ def get_image():
 
 @app.route('/play', methods=['POST'])
 def action_play():
-    request_snake = snakeize_dict_keys(request.get_json(silent=True))
-    print(request_snake['data']['previous_solution'])
-    #data = _action_eval(request_snake['data']['previous_solution'][0])
-    resp={'annenisikim':5}
-    #resp = {'data': request_snake['data'], 'request_id': request_snake['request_id']}
+    request_snake = snakeize_dict_keys(request.get_json())
+    data ={'solution': random_actions(request_snake['data']['environment'])}
+    resp = {'data': data,'request_id': request_snake['request_id']}
     return camelize_dict_keys(resp)
 
 # @app.route('/config', methods=['PUT'])
