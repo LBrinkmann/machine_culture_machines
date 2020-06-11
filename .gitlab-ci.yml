@@ -1,6 +1,6 @@
 stages:
-  - build-container
   - build
+  # - deploy
 
 variables:
   DOCKER_HOST: tcp://localhost:2375/
@@ -24,23 +24,26 @@ variables:
   <<: *tags
   <<: *before
 
-build-container:
-  stage: build-container
+build:
+  stage: build
   image: "docker:18.09.0"
   <<: *commonheader
   script:
-    - docker build -f buildcontainer.dockerfile -t docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-empirica/emperica:latest .
-    - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-empirica/emperica:latest
+    - docker build -f deploymment/. -t docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest .
+    - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest
 
-build:
-  stage: build
-  <<: *commonheader
-  image: docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-empirica/emperica:latest
-  script:
-    - aws --region eu-central-1 eks update-kubeconfig --name chm-test-default --region eu-central-1
-    - cat ~/.kube/config
-    - kubectl get ns
-    - npm run pull:submodules
-    - npm run build
-    - npm run docker:build
-    - helm upgrade --install empericaapp charts/EmpericaApp
+    
+# run image with command: start.sh start-catwell
+# app is listening on port: 8085
+# see also: deploymment/docker-compose.yml
+
+
+# deploy:
+#   stage: deploy
+#   <<: *commonheader
+#   image: docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-empirica/emperica:latest
+#   script:
+#     - aws --region eu-central-1 eks update-kubeconfig --name chm-test-default --region eu-central-1
+#     - cat ~/.kube/config
+#     - kubectl get ns
+#     - helm upgrade --install empericaapp deployment/charts/Machines

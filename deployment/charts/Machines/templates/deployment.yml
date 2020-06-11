@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Machines
+  labels:
+    helm.sh/chart: {{ include "Machines.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "Machines.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      # The value of 100% might not be optimal if the default number of replicas is high. See UU-5025
+      maxSurge: 100%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "Machines.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: Machines
+          image: machine_culture:latest
+          ports:
+            - name: Machines
+              containerPort: 3000
+              protocol: TCP
+        - name: MongoDB
+          image: mongo:latest
+          ports:
+            - name: MongoDB
+              containerPort: 27017
+              protocol: TCP
+---

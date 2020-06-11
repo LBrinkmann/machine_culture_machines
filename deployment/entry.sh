@@ -3,4 +3,6 @@
 
 . /appenv/bin/activate
 
+echo "$@"
+
 exec "$@"

@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   machine_backend:
-    image: levinb/machine-culture-machines:0.3.0
+    image: levinb/machine-culture-machines:0.3.2
     ports:
-      - "8085:8085"
-    command: start.sh start-machine-backend
+      - "80:8085"
+    command: /start.sh start-catwell
