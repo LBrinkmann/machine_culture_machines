@@ -29,7 +29,7 @@ build:
   image: "docker:18.09.0"
   <<: *commonheader
   script:
-    - docker build -f deployment/. -t docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest .
+    - docker build -f deployment/Dockerfile.mb . -t docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest .
     - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest
 
 
