@@ -26,5 +26,3 @@ docker build -f deployment/Dockerfile.mb .
 docker tag cc5e9513e72c levinb/machine-culture:0.2.1
 docker push levinb/machine-culture:0.2.1
 ```
-
-##

@@ -20,5 +20,5 @@ RUN . /appenv/bin/activate; pip --no-cache-dir install --no-dependencies .
 
 COPY deployment/entry.sh /start.sh
 
-ENTRYPOINT ["/start.sh"]
-CMD ["start-machine-backend"]
+# ENTRYPOINT ["/start.sh"]
+# CMD ["start-machine-backend"]

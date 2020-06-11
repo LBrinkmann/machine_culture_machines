@@ -4,3 +4,4 @@ services:
     image: levinb/machine-culture-machines:0.3.0
     ports:
       - "8085:8085"
+    command: start.sh start-machine-backend
