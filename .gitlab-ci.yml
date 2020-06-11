@@ -31,9 +31,12 @@ build:
   script:
     - docker build -f deployment/Dockerfile.mb -t docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest .
     - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest
+    - docker run docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest /start.sh start-catwell 
+    - curl --request POST --url http://0.0.0.0:8085/eval --header 'content-type: application/json' --data '{"requestId": "asdasdasd","data": {"action": {"x": 0.2,"y": 0.3},"environment": {"type": "catwell","version": "foo","experimentName": "test","seed": 1}}}'
+
 
 # TODO: deploy image
-# run image with command: start.sh start-catwell
+# run image with command: /start.sh start-catwell
 # app is listening on port: 8085
 # see also: deploymment/docker-compose.yml
 
