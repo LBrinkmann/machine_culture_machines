@@ -29,10 +29,10 @@ build:
   image: "docker:18.09.0"
   <<: *commonheader
   script:
-    - docker build -f deployment/Dockerfile.mb . -t docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest .
-    - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine-culture-machines/catwell:latest
+    - docker build -f deployment/Dockerfile.mb -t docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest .
+    - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest
 
-
+# TODO: deploy image
 # run image with command: start.sh start-catwell
 # app is listening on port: 8085
 # see also: deploymment/docker-compose.yml
@@ -47,3 +47,4 @@ build:
 #     - cat ~/.kube/config
 #     - kubectl get ns
 #     - helm upgrade --install empericaapp deployment/charts/Machines
+
