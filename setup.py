@@ -19,7 +19,8 @@ setup(name='mc-machine-backend',
       zip_safe=False,
       install_requires=load_requirements(),
         scripts=[
-            'scripts/start-machine-backend',
+            'scripts/start-catwell',
+            'scripts/start-reward-networks',
             'scripts/build-machine-backend',
             'scripts/deploy-machine-backend'
         ]

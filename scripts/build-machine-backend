@@ -3,7 +3,7 @@
 # sudo docker login --username= --password=
 
 DOCKER_ACC=levinb
-DOCKER_REPO=machine-culture
+DOCKER_REPO=machine-culture-machines
 IMG_TAG=$(git rev-parse HEAD)
 
 sudo docker build -f docker/Dockerfile.mb -t $DOCKER_ACC/$DOCKER_REPO:$IMG_TAG .
