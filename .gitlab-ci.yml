@@ -26,19 +26,23 @@ variables:
 
 build:
   stage: build
-  image: "docker:18.09.0"
+  # image: "docker:18.09.0"
   <<: *commonheader
   script:
     - docker build -f deployment/Dockerfile.mb -t docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest .
     - docker push docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest
-    - docker run docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest /start.sh start-catwell 
-    - ./scripts/test-backend
+
 
 # TODO: deploy image
 # run image with command: /start.sh start-catwell
 # app is listening on port: 8085
 # see also: deploymment/docker-compose.yml
 
+# Run image
+# docker run docker.gitlab.gwdg.de/mpib/chm/mac/machine_culture_machines/catwell:latest /start.sh start-catwell 
+
+# Test image
+# ./scripts/test-backend
 
 # deploy:
 #   stage: deploy
